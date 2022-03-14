@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import axios from 'axios';
+
+axios.defaults.baseURL = "https://users-management-a65e4-default-rtdb.firebaseio.com/";
 
 ReactDOM.render(
   <React.StrictMode>

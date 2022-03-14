@@ -1,0 +1,18 @@
+.Users {
+  text-align: center;
+}
+.Users h1.title {
+  border-bottom: 4px solid grey;
+  display: inline-block;
+}
+#line {
+  background-color: grey;
+  height: 3px;
+  margin: 20px auto;
+  width: 95%;
+}
+@media (min-width: 576px) {
+  #line {
+    width: 550px;
+  }
+}

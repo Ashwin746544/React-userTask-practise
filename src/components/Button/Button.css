@@ -1,0 +1,30 @@
+.Action-btn {
+  padding: 10px;
+  margin: 0 10px;
+  font-weight: bold;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 5px;
+  /* background: #5be35b; */
+  color: black;
+  border: none;
+}
+.Success {
+  background-color: lightgreen;
+  margin-left: 0;
+}
+.Danger {
+  background-color: salmon;
+}
+.Success:hover:not(:disabled) {
+  background-color: green;
+  color: white;
+}
+.Danger:hover:not(:disabled) {
+  background-color: red;
+  color: white;
+}
+button:disabled {
+  cursor: not-allowed;
+  border: none;
+}

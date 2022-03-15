@@ -3,7 +3,7 @@ import './NewUser.css';
 import Button from '../Button/Button';
 import InputElement from '../InputElement/InputElement';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
 class NewUser extends Component {
   state = {
@@ -55,20 +55,15 @@ class NewUser extends Component {
   }
   componentDidMount() {
     console.log("[NewUser] componentDidMount");
+    console.log(this.props.location.user);
     if (this.props.match.url == "/edit-user") {
       const updatedUserData = { ...this.state.userData };
-      const parsedQueryString = new URLSearchParams(this.props.location.search);
-      let editUserId;
-      for (let param of parsedQueryString.entries()) {
-        if (param[0] == "id") {
-          editUserId = param[1];
-        } else {
-          updatedUserData[param[0]] = { ...updatedUserData[param[0]], value: param[1] }
-        }
+      for (let key in this.props.location.user) {
+        updatedUserData[key] = { ...updatedUserData[key], value: this.props.location.user[key] };
       }
-      this.setState({ userData: updatedUserData, editMode: true, editUserId: editUserId });
+      this.setState({ userData: updatedUserData, editMode: true });
     }
-    // console.log(this.props);
+    console.log(this.props);
   }
   submitFormHandler = (event) => {
     event.preventDefault();
@@ -76,35 +71,15 @@ class NewUser extends Component {
     for (let key in this.state.userData) {
       currentUser[key] = this.state.userData[key].value;
     }
-    // existingUsers.push(currentUser);
     console.log("form submitted", currentUser);
-    this.setState({ isLoading: true });
+    // this.setState({ isLoading: true });
     if (this.state.editMode) {
-      axios.put("/users/" + this.state.editUserId + ".json", currentUser).then(
-        res => {
-          console.log("User Edited", res.data);
-          this.setState({ isLoading: false });
-          this.props.history.push("/");
-        }
-      ).catch(error => {
-        console.log('Error Ocuured during Editing', error);
-        this.setState({ isLoading: false });
-      }
-      );
+      this.props.userEdited(currentUser, this.props.history);
     } else {
-      axios.post("/users.json", currentUser).then(
-        res => {
-          console.log("User added", res.data);
-          this.setState({ isLoading: false });
-          this.props.history.push("/");
-        }
-      ).catch(error => {
-        console.log('Error Ocuured during Adding', error);
-        this.setState({ isLoading: false });
-      }
-      );
+      console.log(this.props.history);
+      this.props.userAdded(currentUser, this.props.history);
+      // this.props.history.push({ pathname: '/', user: currentUser });
     }
-
   }
   valueChangeHandler = (event) => {
     const currentInput = event.target;
@@ -180,4 +155,5 @@ class NewUser extends Component {
   }
 }
 
+// export default withRouter(NewUser);
 export default NewUser;

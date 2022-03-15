@@ -1,6 +1,6 @@
 import './User.css';
 import Button from '../Button/Button';
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
 const user = (props) => {
   console.log("[User] Render");
   return (
